@@ -22,6 +22,24 @@
         #content.fade-out {
             opacity: 0;
         }
+        /* Сообщение‑заглушка */
+        .placeholder-message {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #555;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-align: center;
+            gap: 1rem;
+        }
+        .placeholder-arrow {
+            font-size: 24px;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -48,19 +66,19 @@
             </ul>
         </div>
         <hr class="navbar__divider">
-		<div class="navbar__section">
-			<h3 class="navbar__section-title">Отделы</h3>
-			<ul class="navbar__menu">
-				<li><a href="info/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>Информация</a></li>
-				<li><a href="news/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20M8 4v16"/></svg></span>Новости</a></li>
-				<li><a href="faq/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></span>FAQ</a></li>
-			</ul>
-		</div>
+        <div class="navbar__section">
+            <h3 class="navbar__section-title">Отделы</h3>
+            <ul class="navbar__menu">
+                <li><a href="info/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>Информация</a></li>
+                <li><a href="news/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20M8 4v16"/></svg></span>Новости</a></li>
+                <li><a href="faq/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></span>FAQ</a></li>
+            </ul>
+        </div>
         <hr class="navbar__divider">
         <div class="navbar__section">
             <h3 class="navbar__section-title">Поддержка</h3>
             <ul class="navbar__menu">
-                <li><a href="../support/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg></span>Создать обращение</a></li>
+                <li><a href="support/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg></span>Создать обращение</a></li>
             </ul>
         </div>
         <hr class="navbar__divider">
@@ -82,7 +100,13 @@
     </nav>
 
     <!-- Основной контейнер для контента страниц -->
-    <main id="content" class="content-area"></main>
+    <main id="content" class="content-area">
+        <!-- Начальная подсказка на главной -->
+        <div class="placeholder-message">
+            <span>Выбери что‑то из навбара</span>
+            <span class="placeholder-arrow"> ^^</span>
+        </div>
+    </main>
 
     <footer class="site-footer">
         <div class="footer-text">© 2026 LunaryVPN · Все права защищены</div>
@@ -106,10 +130,24 @@
             const content = document.getElementById('content');
             const navLinks = document.querySelectorAll('a[data-link]');
 
+            // Корневой контент (заглушка)
+            const homeHTML = `<div class="placeholder-message">
+                <span>Выбери что‑то из навбара</span>
+                <span class="placeholder-arrow">→ ^^</span>
+            </div>`;
+
             // Загрузка страницы
             async function loadPage(url) {
+                // Если запрошен корень или index.html – показываем заглушку
+                if (url === '/' || url === '/index.html') {
+                    content.innerHTML = homeHTML;
+                    content.classList.remove('fade-out');
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    return;
+                }
+
                 content.classList.add('fade-out');
-                await new Promise(resolve => setTimeout(resolve, 200)); // ждём половину анимации
+                await new Promise(resolve => setTimeout(resolve, 200));
 
                 try {
                     const response = await fetch(url);
@@ -149,41 +187,21 @@
             loadPage(location.pathname);
         })();
     </script>
-	<script>
-		// Запрет правого клика
-		document.addEventListener('contextmenu', function(e) {
-			e.preventDefault();
-			return false;
-		});
+    <script>
+        // Запрет правого клика
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
 
-		// Запрет комбинаций клавиш для инструментов разработчика
-		document.addEventListener('keydown', function(e) {
-			// Ctrl+Shift+I (DevTools)
-			if (e.ctrlKey && e.shiftKey && e.key === 'I') {
-				e.preventDefault();
-				return false;
-			}
-			// Ctrl+Shift+J (Console)
-			if (e.ctrlKey && e.shiftKey && e.key === 'J') {
-				e.preventDefault();
-				return false;
-			}
-			// Ctrl+Shift+C (Element Selector)
-			if (e.ctrlKey && e.shiftKey && e.key === 'C') {
-				e.preventDefault();
-				return false;
-			}
-			// Ctrl+U (View Source)
-			if (e.ctrlKey && e.key === 'u') {
-				e.preventDefault();
-				return false;
-			}
-			// F12 (DevTools)
-			if (e.key === 'F12') {
-				e.preventDefault();
-				return false;
-			}
-		});
-	</script>
+        // Запрет комбинаций клавиш для инструментов разработчика
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'C') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+        });
+    </script>
 </body>
 </html>
