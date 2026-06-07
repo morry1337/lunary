@@ -1,0 +1,191 @@
+.burger {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 20;
+    width: 36px;
+    height: 28px;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.burger span {
+    display: block;
+    height: 2px;
+    background: #fff;
+    border-radius: 1px;
+    transition: all 0.3s;
+    transform-origin: left center;
+}
+
+.burger.active span:nth-child(1) {
+    transform: rotate(45deg);
+}
+
+.burger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger.active span:nth-child(3) {
+    transform: rotate(-45deg);
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100%;
+    background: #050505;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    z-index: 15;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 40px 30px 30px 30px;
+    transition: transform 0.3s;
+    
+    /* Скрываем скроллбар для Firefox */
+    scrollbar-width: none;
+    
+    /* Скрываем скроллбар для IE/Edge */
+    -ms-overflow-style: none;
+}
+
+/* Скрываем скроллбар для Chrome, Safari, Opera */
+.navbar::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+    background: transparent;
+}
+
+.navbar__logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.navbar__logo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    text-decoration: none;
+    border: none;
+    outline: none;
+}
+
+.navbar__logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.navbar__logo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.navbar__divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin: 20px 0;
+    width: 100%;
+}
+
+.navbar__section {
+    margin-bottom: 30px;
+}
+
+.navbar__section-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: #666;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+}
+
+.navbar__menu {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.navbar__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    text-decoration: none;
+    color: #a0a0a0;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    transition: all 0.25s;
+    cursor: pointer;
+    background: transparent;
+}
+
+.navbar__item-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar__item-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke: #a0a0a0;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke 0.25s;
+}
+
+.navbar__item:hover {
+    border-color: rgba(255,255,255,0.2);
+    color: #ddd;
+}
+
+.navbar__item:hover .navbar__item-icon svg {
+    stroke: #ddd;
+}
+
+.navbar__item.active {
+    background: #1a1a1a;
+    border-color: rgba(255,255,255,0.25);
+    color: #fff;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.6);
+}
+
+.navbar__item.active .navbar__item-icon svg {
+    stroke: #fff;
+}
+
+.navbar__bottom {
+    margin-top: auto;
+    padding-top: 20px;
+}

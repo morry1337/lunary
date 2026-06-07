@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Lunary · Administration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/modal.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/themes.css">
+    <style>
+        #admin-content {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 290px;
+            right: 0;
+            bottom: 0;
+            z-index: 5;
+            background: #0a0a0a;
+            flex-direction: column;
+        }
+        .admin-inner {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .admin-tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .admin-tab-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            #admin-content {
+                left: 0;
+            }
+        }
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease, opacity 0.2s ease;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+    
+    <div class="content-area"><!-- пусто, админка появляется после входа --></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="navbar__logo">
+            <a href="index.html" class="navbar__logo-link">
+                <svg class="navbar__logo-img" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </a>
+            <span class="navbar__logo-text">LUNARY</span>
+        </div>
+        <hr class="navbar__divider">
+        <div class="navbar__section">
+            <h3 class="navbar__section-title">Социальные сети</h3>
+            <ul class="navbar__menu">
+                <li><a href="https://t.me/LunaryVPN" target="_blank" rel="noopener" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg></span>Telegram Channel</a></li>
+                <li><a href="https://t.me/LunaryVPNbot" target="_blank" rel="noopener" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg></span>Telegram Bot</a></li>
+                <li><a href="https://t.me/st1xlox" target="_blank" rel="noopener" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg></span>Founder</a></li>
+                <li><a href="https://t.me/whcxze" target="_blank" rel="noopener" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg></span>Administrator</a></li>
+            </ul>
+        </div>
+        <hr class="navbar__divider">
+		<div class="navbar__section">
+			<h3 class="navbar__section-title">Отделы</h3>
+			<ul class="navbar__menu">
+				<li><a href="../info/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>Информация</a></li>
+				<li><a href="../news/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20M8 4v16"/></svg></span>Новости</a></li>
+				<li><a href="../faq/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></span>FAQ</a></li>
+			</ul>
+		</div>
+        <hr class="navbar__divider">
+        <div class="navbar__section">
+            <h3 class="navbar__section-title">Поддержка</h3>
+            <ul class="navbar__menu">
+                <li><a href="../support/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg></span>Создать обращение</a></li>
+            </ul>
+        </div>
+        <hr class="navbar__divider">
+        <div class="navbar__section">
+            <h3 class="navbar__section-title">Настройки</h3>
+            <ul class="navbar__menu">
+                <li><a href="../administration/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Администрация</a></li>
+				<li><a href="../tickets/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg></span>Обращения</a></li>
+            </ul>
+        </div>
+        <div class="navbar__bottom">
+            <hr class="navbar__divider">
+            <a href="#" class="navbar__item" id="change-theme-btn">
+                <span class="navbar__item-icon" id="theme-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </span>
+                Сменить тему
+            </a>
+        </div>
+    </nav>
+
+    <!-- Заглушка "Войдите сначала" -->
+    <div id="login-required" style="display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 25; justify-content: center; align-items: center; pointer-events: none;">
+        <div style="text-align: center; pointer-events: auto;">
+            <div style="margin-bottom: 2rem;">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5">
+                    <rect x="5" y="11" width="14" height="12" rx="2" stroke-linecap="round"/>
+                    <path d="M8 11V7a4 4 0 1 1 8 0v4" stroke-linecap="round"/>
+                    <circle cx="12" cy="16" r="1.5" fill="#ffffff"/>
+                    <path d="M12 17.5V19" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <p style="font-family: 'Press Start 2P', monospace; font-size: 14px; color: #fff; letter-spacing: 0.2em; margin-bottom: 2rem;">Сначала войдите!</p>
+            <button id="show-login-btn" class="btn primary" style="width: auto; padding: 1rem 2rem;">Войти</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно входа -->
+    <div class="modal-overlay" id="login-modal">
+        <div class="modal">
+            <h2>ADMIN LOGIN</h2>
+            <label>Login</label>
+            <input type="text" id="login-username" placeholder="admin">
+            <label>Password</label>
+            <input type="password" id="login-password" placeholder="••••••••">
+            <div class="modal-actions">
+                <button class="btn primary" id="login-submit">Sign In</button>
+                <button class="btn" id="login-close">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Встроенная админ-панель -->
+    <div id="admin-content">
+        <div class="admin-inner">
+            <div class="admin-header" style="padding: 1rem 1.5rem; background: #050505; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center;">
+                <h2 style="font-size: 14px; margin: 0;">ADMIN PANEL</h2>
+                <button id="logout-btn" class="btn small">Logout</button>
+            </div>
+            <div class="admin-tabs">
+                <div class="tab active" data-tab="news">News Management</div>
+                <div class="tab" data-tab="site">Site Content</div>
+                <div class="tab" data-tab="admins">Admin Management</div>
+                <!-- Новая вкладка Обращения -->
+                <div class="tab" data-tab="tickets">
+                    <span class="tab-icon">
+                        <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="4" width="20" height="16" rx="2"/>
+                            <path d="M22 4L12 13 2 4"/>
+                        </svg>
+                    </span>
+                    Обращения
+                </div>
+            </div>
+            <div class="admin-tab-content" id="tab-content"></div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="site-footer">
+        <div class="footer-text">© 2026 LunaryVPN · Все права защищены</div>
+        <div class="footer-line"></div>
+        <div class="footer-links">
+            <a href="../user-agreement/index.html">Пользовательское соглашение</a>
+            <a href="../privacy-policy/index.html">Политика конфиденциальности</a>
+        </div>
+    </footer>
+
+    <div id="overlay-bg" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:14;"></div>
+
+    <script src="../js/storage.js"></script>
+    <script src="../js/canvas.js"></script>
+    <script src="../js/navbar.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/news.js"></script>
+    <script src="../js/content.js"></script>
+    <script src="../js/admin.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/theme.js"></script>
+    <script>
+        // Анимация перехода между страницами
+        document.querySelectorAll('.navbar__item[href]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').includes('.html') && !this.getAttribute('target')) {
+                    e.preventDefault();
+                    const targetUrl = this.getAttribute('href');
+                    document.body.style.opacity = '0';
+                    document.body.style.transition = 'opacity 0.3s ease';
+                    setTimeout(() => { window.location.href = targetUrl; }, 300);
+                }
+            });
+        });
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+            document.body.style.transition = 'opacity 0.2s ease';
+        });
+    </script>
+	<script>
+		document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; });
+		document.addEventListener('keydown', function(e) {
+			if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+			if (e.ctrlKey && e.shiftKey && e.key === 'J') { e.preventDefault(); return false; }
+			if (e.ctrlKey && e.shiftKey && e.key === 'C') { e.preventDefault(); return false; }
+			if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+			if (e.key === 'F12') { e.preventDefault(); return false; }
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Lunary · Новости</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/modal.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/themes.css">
+    <style>
+        /* Стилизованный скроллбар для всей страницы */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-card);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        /* Firefox */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.15) var(--bg-card);
+        }
+
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease, opacity 0.2s ease;
+            opacity: 1;
+        }
+        .content-area {
+            display: block;
+            padding: 2rem;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .page-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 22px;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.15em;
+        }
+        .page-subtitle {
+            font-size: 9px;
+            color: #888;
+            letter-spacing: 0.1em;
+        }
+        .divider {
+            border: none;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin: 2rem 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+        .section-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+        .section-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: #ffffff;
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .section-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 14px;
+            color: #ffffff;
+            letter-spacing: 0.1em;
+        }
+        .news-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .news-card {
+            background: #0a0a0a;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+        .news-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255,255,255,0.25);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3), 0 0 10px rgba(255,255,255,0.05);
+        }
+        .news-card-image {
+            width: 120px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            flex-shrink: 0;
+        }
+        .news-card-content {
+            flex: 1;
+        }
+        .news-card-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 11px;
+            color: #ffffff;
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.05em;
+        }
+        .news-card-date {
+            font-size: 7px;
+            color: #666;
+            margin-bottom: 0.6rem;
+        }
+        .news-card-text {
+            font-size: 8px;
+            color: #aaa;
+            line-height: 1.8;
+        }
+        .news-link {
+            color: #aaa;
+            text-decoration: none;
+            border-bottom: 1px dashed rgba(255,255,255,0.3);
+            transition: all 0.2s ease;
+        }
+        .news-link:hover {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+        @media (max-width: 600px) {
+            .news-card {
+                flex-direction: column;
+            }
+            .news-card-image {
+                width: 100%;
+                height: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+    
+    <div class="content-area">
+        <div class="page-header">
+            <h1 class="page-title">Новости</h1>
+            <p class="page-subtitle">Актуальные обновления и события проекта</p>
+        </div>
+        <hr class="divider">
+        <div class="section-header">
+            <!-- Календарик (иконка) -->
+            <div class="section-icon">
+                <svg viewBox="0 0 24 24">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                    <!-- Цифра внутри календарика -->
+                    <text x="12" y="17" text-anchor="middle" fill="#ffffff" font-size="6" stroke="none">17</text>
+                </svg>
+            </div>
+            <h2 class="section-title">Последние новости</h2>
+        </div>
+        <hr class="divider" style="margin: 0.5rem 0 1.5rem 0;">
+        <div class="news-list" id="news-list"></div>
+    </div>
+
+    <nav class="navbar" id="navbar">
+        <div class="navbar__logo">
+            <a href="index.html" class="navbar__logo-link">
+                <svg class="navbar__logo-img" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </a>
+            <span class="navbar__logo-text">LUNARY</span>
+        </div>
+        <hr class="navbar__divider">
+        <div class="navbar__section">
+            <h3 class="navbar__section-title">Социальные сети</h3>
+            <ul class="navbar__menu">
+                <li><a href="https://t.me/LunaryVPN" target="_blank" rel="noopener" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg></span>Telegram Channel</a></li>
+                <li><a href="https://t.me/LunaryVPNbot" target="_blank" rel="noopener" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg></span>Telegram Bot</a></li>
+                <li><a href="https://t.me/st1xlox" target="_blank" rel="noopener" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg></span>Founder</a></li>
+                <li><a href="https://t.me/whcxze" target="_blank" rel="noopener" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg></span>Administrator</a></li>
+            </ul>
+        </div>
+        <hr class="navbar__divider">
+		<div class="navbar__section">
+			<h3 class="navbar__section-title">Отделы</h3>
+			<ul class="navbar__menu">
+			<li><a href="../info/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>Информация</a></li>
+				<li><a href="index.html" class="navbar__item active"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20M8 4v16"/></svg></span>Новости</a></li>
+				<li><a href="../faq/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></span>FAQ</a></li>
+			</ul>
+		</div>
+        <hr class="navbar__divider">
+        <div class="navbar__section">
+            <h3 class="navbar__section-title">Поддержка</h3>
+            <ul class="navbar__menu">
+                <li><a href="../support/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg></span>Создать обращение</a></li>
+            </ul>
+        </div>
+        <hr class="navbar__divider">
+        <div class="navbar__section">
+            <h3 class="navbar__section-title">Настройки</h3>
+            <ul class="navbar__menu">
+                <li><a href="../administration/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Администрация</a></li>
+				<li><a href="../tickets/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg></span>Обращения</a></li>
+            </ul>
+        </div>
+        <div class="navbar__bottom">
+            <hr class="navbar__divider">
+            <a href="#" class="navbar__item" id="change-theme-btn">
+                <span class="navbar__item-icon" id="theme-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </span>
+                Сменить тему
+            </a>
+        </div>
+    </nav>
+
+    <footer class="site-footer">
+        <div class="footer-text">© 2026 LunaryVPN · Все права защищены</div>
+        <div class="footer-line"></div>
+        <div class="footer-links">
+            <a href="../user-agreement/index.html">Пользовательское соглашение</a>
+            <a href="../privacy-policy/index.html">Политика конфиденциальности</a>
+        </div>
+    </footer>
+
+    <div id="overlay-bg" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:14;"></div>
+
+    <script src="../js/storage.js"></script>
+    <script src="../js/canvas.js"></script>
+    <script src="../js/navbar.js"></script>
+    <script src="../js/theme.js"></script>
+    <script>
+        // Запрет правого клика
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; });
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'C') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+        });
+
+        function linkify(text) {
+            const urlRegex = /(https?:\/\/[^\s]+|t\.me\/[^\s]+)/gi;
+            return text.replace(urlRegex, (url) => {
+                const fullUrl = url.startsWith('http') ? url : 'https://' + url;
+                return `<a href="${fullUrl}" target="_blank" rel="noopener" class="news-link">Ссылка</a>`;
+            });
+        }
+
+        (function() {
+            function renderNews() {
+                const container = document.getElementById('news-list');
+                if (!container) return;
+                const news = window.AppData.newsData;
+                container.innerHTML = news.map(n => `
+                    <div class="news-card">
+                        ${n.imageUrl ? `<img src="${n.imageUrl}" alt="${n.title}" class="news-card-image">` : ''}
+                        <div class="news-card-content">
+                            <h3 class="news-card-title">${n.title}</h3>
+                            <div class="news-card-date">${n.date}</div>
+                            <p class="news-card-text">${linkify(n.text)}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            renderNews();
+            window.addEventListener('storage', renderNews);
+        })();
+    </script>
+    <script>
+        document.querySelectorAll('.navbar__item[href]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').includes('.html') && !this.getAttribute('target')) {
+                    e.preventDefault();
+                    const targetUrl = this.getAttribute('href');
+                    document.body.style.opacity = '0';
+                    document.body.style.transition = 'opacity 0.3s ease';
+                    setTimeout(() => { window.location.href = targetUrl; }, 300);
+                }
+            });
+        });
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+            document.body.style.transition = 'opacity 0.2s ease';
+        });
+    </script>
+</body>
+</html>

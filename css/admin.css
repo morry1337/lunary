@@ -1,0 +1,204 @@
+.admin-panel {
+    width: 100%;
+    max-width: 900px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    background: #0a0a0a;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    background: #050505;
+}
+
+.admin-header h2 {
+    font-size: 14px;
+    margin: 0;
+}
+
+.tabs, .admin-tabs {
+    display: flex;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.tab {
+    flex: 1;
+    padding: 14px 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 8px;
+    color: #777;
+    border-bottom: 2px solid transparent;
+    transition: 0.2s;
+    background: #0a0a0a;
+    letter-spacing: 0.1em;
+}
+
+.tab.active {
+    color: #fff;
+    border-bottom-color: #fff;
+    background: #111;
+}
+
+.tab-content, .admin-tab-content {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8px;
+    color: #bbb;
+}
+
+.data-table th,
+.data-table td {
+    padding: 10px 8px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.data-table th {
+    color: #666;
+    letter-spacing: 0.15em;
+}
+
+.action-btns {
+    display: flex;
+    gap: 6px;
+}
+
+.icon-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #aaa;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.icon-btn:hover {
+    border-color: #fff;
+    color: #fff;
+}
+
+.icon-btn.danger:hover {
+    border-color: #ff4444;
+    color: #ff4444;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.form-row input,
+.form-row textarea {
+    flex: 1;
+    background: #111;
+    border: 1px solid #333;
+    padding: 10px;
+    color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    border-radius: 6px;
+    resize: vertical;
+}
+
+.form-row textarea {
+    min-height: 60px;
+}
+
+/* Вкладка Обращения */
+.tab-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+.tab-icon svg {
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+.tickets-container {
+    background: #0a0a0a;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 2rem;
+    min-height: 400px;
+}
+.tickets-filter {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 1rem;
+}
+.ticket-filter-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #aaa;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.ticket-filter-btn:hover {
+    border-color: #fff;
+    color: #fff;
+}
+.ticket-filter-btn.active {
+    background: #1a1a1a;
+    border-color: #fff;
+    color: #fff;
+}
+.ticket-card {
+    background: #111;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 0.8rem;
+}
+.ticket-subject {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #fff;
+    margin-bottom: 0.4rem;
+}
+.ticket-date {
+    font-size: 7px;
+    color: #666;
+    margin-bottom: 0.6rem;
+}
+.ticket-desc {
+    font-size: 8px;
+    color: #aaa;
+    line-height: 1.6;
+}
+.tickets-empty {
+    text-align: center;
+    color: #555;
+    font-size: 9px;
+    margin-top: 3rem;
+}

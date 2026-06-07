@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Lunary · Информация</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/modal.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/themes.css">
+    <style>
+        .info-container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+        .page-title { font-family: 'Press Start 2P', monospace; font-size: 18px; color: #fff; text-align: center; margin-bottom: 0.5rem; letter-spacing: 0.2em; }
+        .page-subtitle { font-size: 9px; color: #888; text-align: center; margin-bottom: 2rem; letter-spacing: 0.1em; }
+        .divider { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 2rem 0; }
+        .info-blocks { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .info-block { background: #0a0a0a; border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 2rem; flex: 1 1 300px; max-width: 500px; transition: all 0.2s ease; }
+        .info-block:hover { border-color: rgba(255,255,255,0.3); box-shadow: 0 0 20px rgba(255,255,255,0.05); }
+        .block-title { font-size: 14px; color: #fff; margin-bottom: 1.2rem; letter-spacing: 0.15em; display: flex; align-items: center; gap: 10px; }
+        .block-title-icon { width: 20px; height: 20px; flex-shrink: 0; }
+        .block-title-icon svg { width: 100%; height: 100%; stroke: #fff; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        .block-text { font-size: 8px; color: #aaa; line-height: 1.8; margin-bottom: 1.5rem; }
+        .btn-telegram { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff; text-decoration: none; font-size: 8px; transition: all 0.2s; margin-right: 10px; margin-bottom: 10px; }
+        .btn-telegram:hover { border-color: #fff; box-shadow: 0 0 12px rgba(255,255,255,0.2); }
+        .btn-telegram svg { width: 14px; height: 14px; stroke: #fff; }
+        .team-member { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
+        .team-avatar { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; background: #111; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        .team-avatar svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 1.5; }
+        .team-info { font-size: 8px; color: #aaa; }
+        .team-info strong { color: #fff; display: block; margin-bottom: 4px; }
+        .info-bottom-block { background: #0a0a0a; border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 2rem; margin-top: 20px; transition: all 0.2s ease; }
+        .info-bottom-block:hover { border-color: rgba(255,255,255,0.3); box-shadow: 0 0 20px rgba(255,255,255,0.05); }
+
+        .thin-divider { border: none; border-top: 1px solid rgba(255,255,255,0.05); margin: 1rem 0 1.5rem 0; }
+
+        .accessibility-section { margin-top: 3rem; }
+        .accessibility-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+        .accessibility-card { background: #0a0a0a; border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 1.2rem; transition: all 0.2s ease; text-align: center; text-decoration: none; display: block; color: inherit; }
+        .accessibility-card:hover { border-color: rgba(255,255,255,0.25); box-shadow: 0 0 15px rgba(255,255,255,0.05); transform: translateY(-2px); }
+        .accessibility-card-title { font-family: 'Press Start 2P', monospace; font-size: 9px; color: #fff; margin-bottom: 0.6rem; letter-spacing: 0.05em; }
+        .accessibility-card-desc { font-size: 7px; color: #888; line-height: 1.6; }
+        .accessibility-hint { font-size: 7px; color: #555; text-align: center; margin-top: 1rem; letter-spacing: 0.05em; }
+
+        /* Тарифы – вертикальные карточки в ряд */
+        .tariffs-section { margin-top: 3rem; }
+        .tariffs-wrapper {
+            background: #0a0a0a;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+        }
+        .tariff-card {
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 1.5rem 1rem;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 1 1 0;
+            min-width: 0;
+        }
+        .tariff-card:hover { border-color: rgba(255,255,255,0.3); box-shadow: 0 0 18px rgba(255,255,255,0.06); transform: translateY(-2px); }
+        .tariff-name { font-family: 'Press Start 2P', monospace; font-size: 10px; color: #fff; margin-bottom: 1rem; letter-spacing: 0.05em; }
+        .tariff-price { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
+        .tariff-period { font-size: 7px; color: #888; margin-bottom: 1rem; }
+        .tariff-features { list-style: none; padding: 0; margin: 0; font-size: 7px; color: #aaa; line-height: 1.8; text-align: left; width: 100%; }
+        .tariff-features li::before { content: "• "; color: #666; }
+        .tariffs-footer { font-size: 7px; color: #555; text-align: center; margin-top: 1rem; letter-spacing: 0.05em; }
+
+        body { transition: background-color 0.15s ease, color 0.15s ease, opacity 0.2s ease; opacity: 1; }
+        @media (max-width: 768px) {
+            .tariffs-wrapper { flex-wrap: wrap; }
+            .tariff-card { flex: 1 1 160px; min-width: 140px; }
+        }
+
+        /* Стилизованный скроллбар под тему */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-card);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Светлая тема */
+        [data-theme="light"] ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.15);
+        }
+        [data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Firefox */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.15) var(--bg-card);
+        }
+        [data-theme="light"] * {
+            scrollbar-color: rgba(0, 0, 0, 0.15) var(--bg-card);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+    
+    <div class="content-area">
+        <div class="info-container">
+            <h1 class="page-title">Информация</h1>
+            <p class="page-subtitle">Официальный сайт «LunaryVPN»<br>Поддержка и информация для каждого игрока.</p>
+            <hr class="divider">
+
+            <div class="info-blocks">
+                <div class="info-block">
+                    <h2 class="block-title">
+                        <span class="block-title-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                        </span>
+                        О проекте
+                    </h2>
+                    <hr class="thin-divider">
+                    <p class="block-text">LunaryVPN — независимый впн сервис, объединяющий пользователей стабильностью и скоростной поддержкой.</p>
+                    <a href="https://t.me/LunaryVPN" target="_blank" rel="noopener" class="btn-telegram">
+                        <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg>
+                        @LunaryVPN
+                    </a>
+                    <a href="https://t.me/LunaryVPNbot" target="_blank" rel="noopener" class="btn-telegram">
+                        <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg>
+                        @LunaryVPNbot
+                    </a>
+                </div>
+
+                <div class="info-block">
+                    <h2 class="block-title">
+                        <span class="block-title-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="17" cy="9" r="3"/><path d="M21 21v-2a3 3 0 0 0-3-3h-1"/></svg>
+                        </span>
+                        Команда проекта
+                    </h2>
+                    <hr class="thin-divider">
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg>
+                        </div>
+                        <div class="team-info"><strong>Основатель</strong>st1xlox</div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg>
+                        </div>
+                        <div class="team-info"><strong>Технический администратор</strong>whcxze</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-bottom-block">
+                <h2 class="block-title">
+                    <span class="block-title-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+                    </span>
+                    Тех. поддержка сайта
+                </h2>
+                <hr class="thin-divider">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <a href="https://t.me/whcxze" target="_blank" rel="noopener" class="btn-telegram">
+                        <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg>
+                        @whcxze
+                    </a>
+                    <a href="https://t.me/hovato" target="_blank" rel="noopener" class="btn-telegram">
+                        <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg>
+                        @hovato
+                    </a>
+                </div>
+            </div>
+
+            <!-- Сегмент доступности с ссылками -->
+            <div class="accessibility-section">
+                <h2 class="block-title">
+                    <span class="block-title-icon">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </span>
+                    Сегмент доступности
+                </h2>
+                <hr class="divider" style="margin: 0.5rem 0 1.5rem 0;">
+                <div class="accessibility-grid">
+                    <a href="https://apps.apple.com/ru/app/happ-proxy-utility-plus/id6746188973" class="accessibility-card">
+                        <div class="accessibility-card-title">Приложение для iOS</div>
+                        <div class="accessibility-card-desc">iOS 16.0 и выше. Для iPhone и iPad с тем же профилем.</div>
+                    </a>
+                    <a href="https://github.com/Happ-proxy/happ-desktop/releases/latest/download/setup-Happ.x64.exe" class="accessibility-card">
+                        <div class="accessibility-card-title">Приложение для Windows</div>
+                        <div class="accessibility-card-desc">Windows 10 и 11. Клиент для ПК с тем же профилем.</div>
+                    </a>
+                    <a href="https://github.com/Happ-proxy/happ-android/releases/latest/download/Happ.apk" class="accessibility-card">
+                        <div class="accessibility-card-title">Приложение для Android</div>
+                        <div class="accessibility-card-desc">Android 12.0 и выше. Мобильное приложение с единым профилем.</div>
+                    </a>
+                    <a href="https://github.com/Happ-proxy/happ-desktop/releases/latest/download/Happ.macOS.universal.dmg" class="accessibility-card">
+                        <div class="accessibility-card-title">Приложение для macOS</div>
+                        <div class="accessibility-card-desc">macOS 15 и выше. Клиент для ПК с тем же профилем.</div>
+                    </a>
+                    <a href="https://github.com/Happ-proxy/happ-desktop/releases/latest/download/Happ.linux.x64.rpm" class="accessibility-card">
+                        <div class="accessibility-card-title">Приложение для Linux</div>
+                        <div class="accessibility-card-desc">Поддержка любых оболочек Linux. Клиент для ПК с тем же профилем.</div>
+                    </a>
+                    <a href="https://github.com/Happ-proxy/happ-android/releases/latest/download/Happ.apk" class="accessibility-card">
+                        <div class="accessibility-card-title">Приложение для TV</div>
+                        <div class="accessibility-card-desc">Приложение для TV с тем же профилем.</div>
+                    </a>
+                </div>
+                <p class="accessibility-hint">Нажми на нужный сегмент чтобы перейти к скачиванию</p>
+            </div>
+
+            <!-- Тарифы – вертикальные карточки равномерно распределены -->
+            <div class="tariffs-section">
+                <h2 class="block-title">
+                    <span class="block-title-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                    </span>
+                    Тарифы
+                </h2>
+                <hr class="divider" style="margin: 0.5rem 0 1.5rem 0;">
+                <div class="tariffs-wrapper">
+                    <div class="tariff-card">
+                        <div class="tariff-name">Пробный доступ</div>
+                        <div class="tariff-price">24 часа</div>
+                        <ul class="tariff-features">
+                            <li>Доступно 2 сервера. Активируется при первом запуске продукта</li>
+                        </ul>
+                    </div>
+                    <div class="tariff-card">
+                        <div class="tariff-name">1 день</div>
+                        <div class="tariff-price">10₽</div>
+                        <div class="tariff-period">10₽/день</div>
+                        <ul class="tariff-features">
+                            <li>Без лимитов</li>
+                            <li>Доступ к Premium серверам</li>
+                            <li>Поддержка на сайте</li>
+                        </ul>
+                    </div>
+                    <div class="tariff-card">
+                        <div class="tariff-name">1 неделя</div>
+                        <div class="tariff-price">50₽</div>
+                        <div class="tariff-period">50₽/неделя</div>
+                        <ul class="tariff-features">
+                            <li>Без лимитов</li>
+                            <li>Доступ к Premium серверам</li>
+                            <li>Поддержка на сайте</li>
+                        </ul>
+                    </div>
+                    <div class="tariff-card">
+                        <div class="tariff-name">1 месяц</div>
+                        <div class="tariff-price">115₽</div>
+                        <div class="tariff-period">115₽/мес</div>
+                        <ul class="tariff-features">
+                            <li>Без лимитов</li>
+                            <li>Доступ к Premium серверам</li>
+                            <li>Поддержка на сайте</li>
+                        </ul>
+                    </div>
+                    <div class="tariff-card">
+                        <div class="tariff-name">1 год</div>
+                        <div class="tariff-price">550₽</div>
+                        <div class="tariff-period">45₽/мес</div>
+                        <ul class="tariff-features">
+                            <li>Без лимитов</li>
+                            <li>Доступ к Premium серверам</li>
+                            <li>Поддержка на сайте</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="tariffs-footer">для приобретения перейдите в наш Telegram-бот</p>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar" id="navbar">
+        <div class="navbar__logo">
+            <a href="index.html" class="navbar__logo-link">
+                <svg class="navbar__logo-img" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </a>
+            <span class="navbar__logo-text">LUNARY</span>
+        </div>
+        <hr class="navbar__divider">
+        <div class="navbar__section">
+            <h3 class="navbar__section-title">Социальные сети</h3>
+            <ul class="navbar__menu">
+                <li><a href="https://t.me/LunaryVPN" target="_blank" rel="noopener" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg></span>Telegram Channel</a></li>
+                <li><a href="https://t.me/LunaryVPNbot" target="_blank" rel="noopener" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg></span>Telegram Bot</a></li>
+                <li><a href="https://t.me/st1xlox" target="_blank" rel="noopener" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg></span>Founder</a></li>
+                <li><a href="https://t.me/whcxze" target="_blank" rel="noopener" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg></span>Administrator</a></li>
+            </ul>
+        </div>
+        <hr class="navbar__divider">
+		<div class="navbar__section">
+			<h3 class="navbar__section-title">Отделы</h3>
+			<ul class="navbar__menu">
+				<li><a href="index.html" class="navbar__item active"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>Информация</a></li>
+				<li><a href="../news/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20M8 4v16"/></svg></span>Новости</a></li>
+				<li><a href="../faq/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></span>FAQ</a></li>
+			</ul>
+		</div>
+        <hr class="navbar__divider">
+        <div class="navbar__section">
+            <h3 class="navbar__section-title">Поддержка</h3>
+            <ul class="navbar__menu">
+                <li><a href="../support/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg></span>Создать обращение</a></li>
+            </ul>
+        </div>
+        <hr class="navbar__divider">
+        <div class="navbar__section">
+            <h3 class="navbar__section-title">Настройки</h3>
+            <ul class="navbar__menu">
+                <li><a href="../administration/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Администрация</a></li>
+				<li><a href="../tickets/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg></span>Обращения</a></li>
+            </ul>
+        </div>
+        <div class="navbar__bottom">
+            <hr class="navbar__divider">
+            <a href="#" class="navbar__item" id="change-theme-btn">
+                <span class="navbar__item-icon" id="theme-icon">
+                    <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </span>
+                Сменить тему
+            </a>
+        </div>
+    </nav>
+
+    <footer class="site-footer">
+        <div class="footer-text">© 2026 LunaryVPN · Все права защищены</div>
+        <div class="footer-line"></div>
+        <div class="footer-links">
+            <a href="../user-agreement/index.html">Пользовательское соглашение</a>
+            <a href="../privacy-policy/index.html">Политика конфиденциальности</a>
+        </div>
+    </footer>
+
+    <div id="overlay-bg" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:14;"></div>
+
+    <script src="../js/storage.js"></script>
+    <script src="../js/canvas.js"></script>
+    <script src="../js/navbar.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/theme.js"></script>
+    <script>
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; });
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'C') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+        });
+
+        document.querySelectorAll('.navbar__item[href]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').includes('.html') && !this.getAttribute('target')) {
+                    e.preventDefault();
+                    const targetUrl = this.getAttribute('href');
+                    document.body.style.opacity = '0';
+                    document.body.style.transition = 'opacity 0.3s ease';
+                    setTimeout(() => { window.location.href = targetUrl; }, 300);
+                }
+            });
+        });
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+            document.body.style.transition = 'opacity 0.2s ease';
+        });
+    </script>
+</body>
+</html>

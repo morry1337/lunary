@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;           /* позволяем скроллинг при длинном контенте */
+    background: #000;
+    font-family: 'Press Start 2P', monospace;
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+}
+
+/* Flex-контейнер для прижатия футера */
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#scene {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+/* Основная область контента – растягивается, занимая всё доступное место */
+.content-area {
+    position: relative;
+    z-index: 2;
+    margin-left: 290px;
+    padding: 2rem;
+    color: #fff;
+    flex: 1 0 auto;            /* растягивается, но не сжимается меньше контента */
+    transition: margin-left 0.3s;
+}
+
+/* Футер – всегда внизу */
+.site-footer {
+    position: relative;
+    z-index: 10;
+    background: #050505;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    margin-left: 290px;
+    flex-shrink: 0;            /* не сжимается */
+    transition: margin-left 0.3s;
+}
+
+.footer-line {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin: 0.8rem 0;
+}
+
+.footer-text {
+    font-size: 8px;
+    color: #666;
+    letter-spacing: 0.1em;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    font-size: 7px;
+    color: #888;
+}
+
+.footer-links a {
+    color: #888;
+    text-decoration: none;
+    transition: color 0.2s, text-shadow 0.2s;
+}
+
+.footer-links a:hover {
+    color: #fff;
+    text-shadow: 0 0 6px rgba(255,255,255,0.4);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .content-area,
+    .site-footer {
+        margin-left: 0;
+    }
+    .footer-links {
+        gap: 1rem;
+    }
+}

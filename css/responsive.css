@@ -1,0 +1,70 @@
+@media (max-width: 768px) {
+    .navbar {
+        transform: translateX(-100%);
+        width: 270px;
+        padding: 30px 20px 20px 20px;
+    }
+
+    .navbar.open {
+        transform: translateX(0);
+    }
+
+    .burger {
+        display: flex;
+    }
+
+    .navbar__logo-text {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        width: 260px;
+    }
+}
+
+@media (max-width: 600px) {
+    .admin-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .tabs, .admin-tabs {
+        flex-wrap: wrap;
+    }
+
+    .tab {
+        flex: unset;
+        width: 50%;
+    }
+}
+
+/* Адаптивность информационных блоков */
+.info-blocks {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.info-block {
+    flex: 1 1 300px;
+    max-width: 500px;
+}
+
+.info-bottom-block {
+    width: 100%;
+    max-width: calc(1000px + 20px); /* сумма двух блоков + зазор */
+    margin-top: 20px;
+}
+
+@media (max-width: 800px) {
+    .info-blocks {
+        flex-direction: column;
+        align-items: center;
+    }
+    .info-bottom-block {
+        max-width: 100%;
+    }
+}

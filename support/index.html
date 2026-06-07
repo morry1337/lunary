@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Lunary · Поддержка</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/modal.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/themes.css">
+    <style>
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease, opacity 0.2s ease;
+            opacity: 1;
+        }
+        .content-area {
+            display: block;
+            padding: 2rem;
+            height: calc(100vh - 120px);
+            box-sizing: border-box;
+        }
+        .chat-container {
+            background: #0a0a0a;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-header {
+            padding: 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-family: 'Press Start 2P', monospace;
+            font-size: 14px;
+            color: #fff;
+            letter-spacing: 0.1em;
+            text-align: center;
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .message {
+            max-width: 80%;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            font-size: 8px;
+            line-height: 1.6;
+            word-break: break-word;
+        }
+        .message.user {
+            align-self: flex-end;
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #ddd;
+        }
+        .message.admin {
+            align-self: flex-start;
+            background: #1a1a1a;
+            border: 1px solid rgba(255,255,255,0.25);
+            color: #fff;
+        }
+        .message-date {
+            font-size: 6px;
+            color: #666;
+            margin-top: 0.3rem;
+            text-align: right;
+        }
+        .chat-input-area {
+            padding: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .chat-input {
+            flex: 1;
+            background: #111;
+            border: 1px solid #333;
+            padding: 10px;
+            color: #fff;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 8px;
+            border-radius: 6px;
+            outline: none;
+            resize: none;
+            min-height: 20px;
+            max-height: 80px;
+        }
+        .chat-input:focus { border-color: #fff; }
+        .chat-send-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 8px;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .chat-send-btn:hover { background: #1a1a1a; border-color: #fff; }
+        .empty-chat {
+            text-align: center;
+            color: #555;
+            font-size: 9px;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+    
+    <div class="content-area">
+        <div class="chat-container">
+            <div class="chat-header">Поддержка</div>
+            <div class="chat-messages" id="chat-messages">
+                <p class="empty-chat">Напишите ваш вопрос, и мы ответим в ближайшее время.</p>
+            </div>
+            <div class="chat-input-area">
+                <textarea class="chat-input" id="chat-input" placeholder="Введите сообщение..." rows="1"></textarea>
+                <button class="chat-send-btn" id="send-btn">➤</button>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar" id="navbar">
+        <div class="navbar__logo">
+            <a href="index.html" class="navbar__logo-link">
+                <svg class="navbar__logo-img" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </a>
+            <span class="navbar__logo-text">LUNARY</span>
+        </div>
+        <hr class="navbar__divider">
+        <div class="navbar__section">
+            <h3 class="navbar__section-title">Социальные сети</h3>
+            <ul class="navbar__menu">
+                <li><a href="https://t.me/LunaryVPN" target="_blank" rel="noopener" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg></span>Telegram Channel</a></li>
+                <li><a href="https://t.me/LunaryVPNbot" target="_blank" rel="noopener" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg></span>Telegram Bot</a></li>
+                <li><a href="https://t.me/st1xlox" target="_blank" rel="noopener" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg></span>Founder</a></li>
+                <li><a href="https://t.me/whcxze" target="_blank" rel="noopener" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L2 7l9 6M22 2L14 22l-4-8"/></svg></span>Administrator</a></li>
+            </ul>
+        </div>
+        <hr class="navbar__divider">
+        <div class="navbar__section">
+            <h3 class="navbar__section-title">Отделы</h3>
+            <ul class="navbar__menu">
+                <li><a href="../info/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>Информация</a></li>
+                <li><a href="../news/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20M8 4v16"/></svg></span>Новости</a></li>
+                <li><a href="../faq/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></span>FAQ</a></li>
+            </ul>
+        </div>
+        <hr class="navbar__divider">
+        <div class="navbar__section">
+            <h3 class="navbar__section-title">Поддержка</h3>
+            <ul class="navbar__menu">
+                <li><a href="index.html" class="navbar__item active"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg></span>Создание обращение</a></li>
+            </ul>
+        </div>
+        <hr class="navbar__divider">
+        <div class="navbar__section">
+            <h3 class="navbar__section-title">Настройки</h3>
+            <ul class="navbar__menu">
+                <li><a href="../administration/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Администрация</a></li>
+				<li><a href="../tickets/index.html" class="navbar__item"><span class="navbar__item-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg></span>Обращения</a></li>
+            </ul>
+        </div>
+        <div class="navbar__bottom">
+            <hr class="navbar__divider">
+            <a href="#" class="navbar__item" id="change-theme-btn">
+                <span class="navbar__item-icon" id="theme-icon">
+                    <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </span>
+                Сменить тему
+            </a>
+        </div>
+    </nav>
+
+    <footer class="site-footer">
+        <div class="footer-text">© 2026 LunaryVPN · Все права защищены</div>
+        <div class="footer-line"></div>
+        <div class="footer-links">
+            <a href="../user-agreement/index.html">Пользовательское соглашение</a>
+            <a href="../privacy-policy/index.html">Политика конфиденциальности</a>
+        </div>
+    </footer>
+
+    <div id="overlay-bg" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:14;"></div>
+
+    <script src="../js/storage.js"></script>
+    <script src="../js/canvas.js"></script>
+    <script src="../js/navbar.js"></script>
+    <script src="../js/theme.js"></script>
+    <script>
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') e.preventDefault();
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') e.preventDefault();
+            if (e.ctrlKey && e.shiftKey && e.key === 'C') e.preventDefault();
+            if (e.ctrlKey && e.key === 'u') e.preventDefault();
+            if (e.key === 'F12') e.preventDefault();
+        });
+
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-btn');
+
+        function getActiveTicket() {
+            let tickets = window.AppData.ticketsData;
+            // Ищем активный тикет пользователя (для простоты – первый попавшийся активный или создаём новый)
+            let ticket = tickets.find(t => t.status !== 'closed');
+            if (!ticket) {
+                ticket = {
+                    id: window.AppData.getNextId(tickets),
+                    subject: 'Чат поддержки',
+                    description: '',
+                    status: 'active',
+                    date: new Date().toISOString().split('T')[0],
+                    messages: []
+                };
+                tickets.push(ticket);
+                window.AppData.saveData();
+            }
+            return ticket;
+        }
+
+        function renderMessages() {
+            const ticket = getActiveTicket();
+            if (!ticket.messages.length) {
+                chatMessages.innerHTML = '<p class="empty-chat">Напишите ваш вопрос, и мы ответим в ближайшее время.</p>';
+                return;
+            }
+            chatMessages.innerHTML = ticket.messages.map(m => `
+                <div class="message ${m.author}">
+                    <div>${m.text}</div>
+                    <div class="message-date">${m.date}</div>
+                </div>
+            `).join('');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function sendMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+            const ticket = getActiveTicket();
+            ticket.messages.push({
+                author: 'user',
+                text: text,
+                date: new Date().toISOString().split('T')[0]
+            });
+            // Автоответ от администратора (заглушка, пока админ не ответит)
+            // Можно оставить без автоответа
+            window.AppData.saveData();
+            chatInput.value = '';
+            renderMessages();
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        renderMessages();
+
+        // Анимация перехода
+        document.querySelectorAll('.navbar__item[href]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').includes('.html') && !this.getAttribute('target')) {
+                    e.preventDefault();
+                    const targetUrl = this.getAttribute('href');
+                    document.body.style.opacity = '0';
+                    document.body.style.transition = 'opacity 0.3s ease';
+                    setTimeout(() => { window.location.href = targetUrl; }, 300);
+                }
+            });
+        });
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+            document.body.style.transition = 'opacity 0.2s ease';
+        });
+    </script>
+</body>
+</html>
